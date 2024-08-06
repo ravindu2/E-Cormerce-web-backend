@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express();
 
-const adminController = require("../controller/adminController");
+
 const userController = require("../controller/userController");
 const productController = require("../controller/productController");
 const blogController = require("../controller/blogController");
@@ -19,11 +19,6 @@ router.get("/", (req, res) => {
 	res.send("Server is up and running...");
 });
 
-// Admin routes
-router.post("/api/v1/admin/register", adminController.register);
-router.post("/api/v1/admin/login", adminController.login);
-router.post("/api/v1/admin/delete", checkAuth, adminController.delete);
-router.get("/api/v1/admin", checkAuth, adminController.get);
 
 // User routes
 router.post("/api/v1/user/register", userController.register);
