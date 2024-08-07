@@ -31,13 +31,7 @@ const userSchema = new mongoose.Schema({
 		minlength: 3,
 		maxlength: 255,
 	},
-	lastName: {
-		type: String,
-		required: true,
-		trim: true,
-		minlength: 3,
-		maxlength: 255,
-	},
+	
 	email: {
 		type: String,
 		required: true,
@@ -45,14 +39,6 @@ const userSchema = new mongoose.Schema({
 		trim: true,
 		minlength: 3,
 		maxlength: 255,
-	},
-	phone: {
-		type: String,
-		required: true,
-		unique: true,
-		trim: true,
-		minlength: 3,
-		maxlength: 15,
 	},
 	address: addressSchema,
 	password: {

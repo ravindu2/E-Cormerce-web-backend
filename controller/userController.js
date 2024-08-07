@@ -5,9 +5,7 @@ const jwt = require("jsonwebtoken");
 exports.register = (req, res) => {
 	if (
 		!req.body.firstName ||
-		!req.body.lastName ||
 		!req.body.email ||
-		!req.body.phone ||
 		!req.body.password
 	) {
 		return res.status(400).send({
@@ -15,7 +13,7 @@ exports.register = (req, res) => {
 		});
 	}
 
-	const { firstName, lastName, email, phone, password } = req.body;
+	const { firstName, email, password } = req.body;
 	User.findOne({ email }).then((user) => {
 		if (user) {
 			return res.status(400).json({
@@ -24,9 +22,7 @@ exports.register = (req, res) => {
 		}
 		const newUser = new User({
 			firstName,
-			lastName,
 			email,
-			phone,
 			password,
 		});
 		bcrypt.genSalt(10, (err, salt) => {
@@ -42,9 +38,9 @@ exports.register = (req, res) => {
 							data: user,
 						});
 					})
-					.catch(() => {
+					.catch((err) => {
 						res.status(400).json({
-							message: "User creation failed",
+							message: "User creation failed",err
 						});
 					});
 			});
@@ -75,9 +71,7 @@ exports.login = (req, res) => {
 			const payload = {
 				id: user._id,
 				firstName: user.firstName,
-				lastName: user.lastName,
 				email: user.email,
-				phone: user.phone,
 			};
 			jwt.sign(
 				payload,
@@ -110,9 +104,7 @@ exports.update = (req, res) => {
 			});
 		}
 		user.firstName = firstName;
-		user.lastName = lastName;
 		user.email = email;
-		user.phone = phone;
 		user
 			.save()
 			.then((user) => {
