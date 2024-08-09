@@ -1,38 +1,41 @@
 const Product = require("../model/product");
 
-exports.add = (req, res) => {
-	const product = new Product({
-		name: req.body.name,
-		price: req.body.price,
-		description: req.body.description,
-		image: req.file.path,
-		category: req.body.category,
-	});
-	if (
-		!product.name ||
-		!product.price ||
-		!product.description ||
-		!product.image ||
-		!product.category
-	) {
+exports.add = async (req, res) => {
+	try {
+	  const { name, price, description, image, category } = req.body;
+  
+	  // Check for required fields
+	  if (!name || !price || !description || !category) {
 		return res.status(400).send({
-			message: "All fields are required",
+		  message: "Name, price, description, and category are required",
 		});
+	  }
+  
+	  // Create a new product instance
+	  const product = new Product({
+		name,
+		price,
+		description,
+		image,
+		category,
+		// tags, mimeType, and timestamps are automatically handled
+	  });
+  
+	  // Save the product to the database
+	  const savedProduct = await product.save();
+  
+	  res.status(201).json({
+		message: "Product added successfully",
+		data: savedProduct,
+	  });
+	} catch (err) {
+	  res.status(500).send({
+		status: "error",
+		message: err.message,
+	  });
 	}
-
-	product.save((err, product) => {
-		if (err) {
-			res.send({
-				status: "error",
-				message: err.message,
-			});
-		}
-		res.json({
-			message: "Product added successfully",
-			data: product,
-		});
-	});
-};
+  };
+  
 
 exports.update = (req, res) => {
 	if (

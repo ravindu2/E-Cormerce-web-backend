@@ -34,8 +34,6 @@ router.get("/api/v1/user/list", checkAuth, userController.getAll);
 // Product routes
 router.post(
 	"/api/v1/product/add",
-	checkAuth,
-	upload.single("image"),
 	productController.add
 );
 router.post(
