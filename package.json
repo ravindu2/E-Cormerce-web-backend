@@ -4,7 +4,7 @@
 	"description": "Backend for a ecommerce website",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"test": "mocha --timeout 10000",
 		"dev": "nodemon index.js"
 	},
 	"repository": {
@@ -30,6 +30,10 @@
 		"razorpay": "^2.8.1"
 	},
 	"devDependencies": {
-		"nodemon": "^2.0.16"
+		"chai": "^5.1.1",
+		"chai-http": "^5.0.0",
+		"mocha": "^10.7.3",
+		"nodemon": "^2.0.16",
+		"sinon": "^18.0.0"
 	}
 }
